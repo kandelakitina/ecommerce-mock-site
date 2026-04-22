@@ -11,7 +11,7 @@ export default function Home() {
 			</div>
 			<div className="container">
 				<h2 className="page-title">Our products</h2>
-				<div className="products-grid">
+				<div className="product-grid">
 					{products.map((product) => (
 						<div className="product-card" key={product.id}>
 							<img
@@ -21,11 +21,13 @@ export default function Home() {
 								aria-label={product.name}
 							/>
 							<div className="product-card-content">
-								<h3>{product.name}</h3>
-								<p>{product.price}</p>
-								<div>
-									<Link></Link>
-									<button type="button">Add to Cart</button>
+								<h3 className="product-card-name">{product.name}</h3>
+								<p className="product-card-price">{product.price}</p>
+								<div className="product-card-actions">
+									<Link className="btn btn-secondary">View Details</Link>
+									<button className="btn btn-primary" type="button">
+										Add to Cart
+									</button>
 								</div>
 							</div>
 						</div>
