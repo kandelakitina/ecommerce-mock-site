@@ -39,6 +39,11 @@ export default function Auth() {
 					<h1 className="page-title">
 						{mode === "signup" ? "Sign up" : "Login"}
 					</h1>
+					{message && (
+						<div className={`message message-${message.type}`}>
+							{message.text}
+						</div>
+					)}
 					<form onSubmit={handleSubmit(onSubmit)} className="auth-form">
 						<div className="form-group">
 							<label htmlFor="email" className="form-label">
@@ -81,11 +86,6 @@ export default function Auth() {
 							{mode === "signup" ? "Sign up" : "Login"}
 						</button>
 					</form>
-					{message && (
-						<div className={`message message-${message.type}`}>
-							{message.text}
-						</div>
-					)}
 					<div className="auth-switch">
 						{mode === "signup" ? (
 							<p>
