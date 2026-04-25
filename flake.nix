@@ -5,7 +5,7 @@
   outputs = { flakelight, ... }:
     flakelight ./. {
       devShell = pkgs: {
-        packages = with pkgs; [ nodejs ];
+        packages = with pkgs; [ nodejs biome ];
         shellHook = ''
           # Moving npm to local folder instead of nix store
           npm config set prefix '~/.npm-packages'
@@ -13,7 +13,7 @@
           export NODE_PATH="$HOME/.npm-packages/lib/node_modules"
 
           echo "node `${pkgs.nodejs}/bin/node --version`"
-          echo "Shell includes: node"
+          echo "Shell includes: node, biome"
         '';
       };
     };
