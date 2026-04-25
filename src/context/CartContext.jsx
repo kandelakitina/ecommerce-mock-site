@@ -1,12 +1,39 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
+import { useAuth } from "./AuthContext.jsx";
 
 const CartContext = createContext(null);
 
 export function CartProvider({ children }) {
-	const [cart, setCart] = useState(() => {
-		const saved = localStorage.getItem("cart");
-		return saved ? JSON.parse(saved) : [];
-	});
+	const { user } = useAuth();
+	const userEmail = user?.email;
+	const loadedFor = useRef(null);
+	const [cart, setCart] = useState([]);
+
+	useEffect(() => {
+		if (userEmail) {
+			const saved = localStorage.getItem(`cart_${userEmail}`);
+			if (saved) {
+				try {
+					setCart(JSON.parse(saved));
+				} catch {
+					localStorage.removeItem(`cart_${userEmail}`);
+					setCart([]);
+				}
+			} else {
+				setCart([]);
+			}
+			loadedFor.current = userEmail;
+		} else {
+			setCart([]);
+			loadedFor.current = null;
+		}
+	}, [userEmail]);
+
+	useEffect(() => {
+		if (userEmail && loadedFor.current === userEmail) {
+			localStorage.setItem(`cart_${userEmail}`, JSON.stringify(cart));
+		}
+	}, [cart, userEmail]);
 
 	const addToCart = (product, quantity = 1) => {
 		setCart((prev) => {
