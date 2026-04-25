@@ -3,9 +3,14 @@
 
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext.jsx";
 
 export default function Auth() {
 	const [mode, setMode] = useState("signup");
+	const [message, setMessage] = useState(null);
+	const { login, signup } = useAuth();
+	const navigate = useNavigate();
 	const {
 		register,
 		handleSubmit,
@@ -13,7 +18,18 @@ export default function Auth() {
 	} = useForm();
 
 	const onSubmit = (data) => {
-		console.log(data);
+		try {
+			if (mode === "signup") {
+				signup(data.email, data.password);
+				setMessage({ type: "success", text: "Account created successfully!" });
+			} else {
+				login(data.email, data.password);
+				setMessage({ type: "success", text: "Login successful!" });
+			}
+			setTimeout(() => navigate("/"), 1000);
+		} catch (error) {
+			setMessage({ type: "error", text: error.message });
+		}
 	};
 
 	return (
@@ -65,6 +81,11 @@ export default function Auth() {
 							{mode === "signup" ? "Sign up" : "Login"}
 						</button>
 					</form>
+					{message && (
+						<div className={`message message-${message.type}`}>
+							{message.text}
+						</div>
+					)}
 					<div className="auth-switch">
 						{mode === "signup" ? (
 							<p>
