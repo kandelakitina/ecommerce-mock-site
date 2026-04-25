@@ -32,6 +32,11 @@ export default function Auth() {
 		}
 	};
 
+	const switchMode = (newMode) => {
+		setMode(newMode);
+		setMessage(null);
+	};
+
 	return (
 		<div className="page">
 			<div className="contrainer">
@@ -90,14 +95,17 @@ export default function Auth() {
 						{mode === "signup" ? (
 							<p>
 								Already have an account?{" "}
-								<span className="auth-link" onClick={() => setMode("login")}>
+								<span className="auth-link" onClick={() => switchMode("login")}>
 									Login
 								</span>
 							</p>
 						) : (
 							<p>
 								Don't have an account?{" "}
-								<span className="auth-link" onClick={setMode("signup")}>
+								<span
+									className="auth-link"
+									onClick={() => switchMode("signup")}
+								>
 									Sign Up
 								</span>
 							</p>
