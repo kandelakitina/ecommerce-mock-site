@@ -1,13 +1,25 @@
 /** biome-ignore-all lint/a11y/noStaticElementInteractions: no reason */
 /** biome-ignore-all lint/a11y/useKeyWithClickEvents: no reason */
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx";
 
 export default function Auth() {
-	const [mode, setMode] = useState("signup");
+	const location = useLocation();
+	const [mode, setMode] = useState(() => {
+		const params = new URLSearchParams(location.search);
+		return params.get("mode") === "login" ? "login" : "signup";
+	});
+
+	useEffect(() => {
+		const params = new URLSearchParams(location.search);
+		const modeParam = params.get("mode");
+		if (modeParam === "login" || modeParam === "signup") {
+			setMode(modeParam);
+		}
+	}, [location.search]);
 	const [message, setMessage] = useState(null);
 	const { login, signup } = useAuth();
 	const navigate = useNavigate();

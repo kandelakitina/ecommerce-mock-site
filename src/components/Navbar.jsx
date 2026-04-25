@@ -32,10 +32,10 @@ export default function Navbar() {
 						</div>
 					) : (
 						<div className="navbar-auth-links">
-							<Link to="/auth" className="btn btn-primary">
+							<Link to="/auth?mode=login" className="btn btn-primary">
 								Login
 							</Link>
-							<Link to="/auth" className="btn btn-secondary">
+							<Link to="/auth?mode=signup" className="btn btn-secondary">
 								Signup
 							</Link>
 						</div>
