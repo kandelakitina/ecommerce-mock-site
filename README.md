@@ -1,16 +1,122 @@
-# React + Vite
+# ShopHub
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern e-commerce web application built with React, featuring user authentication, product browsing, shopping cart management, and checkout functionality.
 
-Currently, two official plugins are available:
+![React](https://img.shields.io/badge/React-18-blue)
+![Vite](https://img.shields.io/badge/Vite-5-purple)
+![React Router](https://img.shields.io/badge/React_Router-6-red)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features
 
-## React Compiler
+- **User Authentication** - Sign up, login, and logout with localStorage persistence
+- **Product Catalog** - Browse products with detailed view pages
+- **Shopping Cart** - Add, remove, and update quantities with per-user cart storage
+- **Checkout** - Order summary with real-time totals and place order functionality
+- **Responsive Design** - Mobile-friendly UI with clean, modern styling
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech Stack
 
-## Expanding the ESLint configuration
+| Technology | Purpose |
+|------------|---------|
+| **React 18** | UI framework with hooks |
+| **Vite** | Build tool and dev server |
+| **React Router v6** | Client-side routing |
+| **React Hook Form** | Form handling and validation |
+| **Context API** | Global state management |
+| **localStorage** | Data persistence |
+| **CSS3** | Styling and responsive design |
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Architecture
+
+### Project Structure
+
+```
+src/
+├── components/       # Reusable UI components
+│   ├── Navbar.jsx
+│   └── ProductCard.jsx
+├── context/          # React Context providers
+│   ├── AuthContext.jsx    # Authentication state
+│   └── CartContext.jsx    # Shopping cart state
+├── data/             # Mock data
+│   └── products.js
+├── pages/            # Route components
+│   ├── Auth.jsx         # Login/Signup
+│   ├── Checkout.jsx     # Order summary
+│   ├── Home.jsx         # Product listing
+│   └── Product.jsx      # Product detail
+├── App.jsx           # Main app with routes
+├── App.css           # Global styles
+└── main.jsx          # Entry point with providers
+```
+
+### State Management
+
+The app uses **React Context API** for global state:
+
+```
+AuthProvider (handles user auth)
+    └── CartProvider (handles shopping cart)
+            └── App (routes and components)
+```
+
+- **AuthContext** - Manages user authentication state with localStorage persistence
+- **CartContext** - Manages shopping cart with per-user storage (`cart_{email}`)
+
+### Key Design Decisions
+
+1. **Per-User Carts** - Each user has their own cart stored in localStorage
+2. **No Backend** - All data persisted locally for demo purposes
+3. **Context over Redux** - Simple state management without extra dependencies
+4. **React Hook Form** - Efficient form handling with built-in validation
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 18+
+- npm or yarn
+
+### Installation
+
+```bash
+# Clone the repository
+git clone <repository-url>
+cd ShopHub
+
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+```
+
+The app will be available at `http://localhost:5173`
+
+### Available Scripts
+
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start development server |
+| `npm run build` | Build for production |
+| `npm run preview` | Preview production build |
+| `npm run lint` | Run ESLint |
+
+## Usage
+
+1. **Sign Up** - Create an account with email and password (min 8 characters)
+2. **Browse Products** - View products on the home page
+3. **Add to Cart** - Click "Add to Cart" on any product
+4. **Checkout** - Review order summary and place order
+5. **Logout** - Sign out (cart is preserved for next login)
+
+## Acknowledgments
+
+This project was developed following the tutorial series:
+- **YouTube**: [E-commerce React Course](https://www.youtube.com/watch?v=Wt3isV2irrA)
+
+Built with assistance from **Opencode** using the **Qwen3.5-397b-a17b** AI model.
+
+## License
+
+MIT License - feel free to use this project for learning and development.
